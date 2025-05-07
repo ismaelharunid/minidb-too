@@ -1,7 +1,9 @@
-minidb: simple python object store
-==================================
+minidb-too: simple python object store
+======================================
 
-[![PyTest](https://github.com/thp/minidb/actions/workflows/pytest.yaml/badge.svg)](https://github.com/thp/minidb/actions/workflows/pytest.yaml)
+minidb is an experiment in enhancing minidb to use python3.11 for more cohetent attribute and column definition and typing.
+
+[![PyTest](https://github.com/ismaelharunid/minidb-too/actions/workflows/pytest.yaml/badge.svg)](https://github.com/minidb-too/actions/workflows/pytest.yaml)
 
 Store Python objects in SQLite 3. Concise, pythonic API. Fun to use.
 
@@ -12,28 +14,28 @@ Tutorial
 Let's start by importing the minidb module in Python 3:
 
 ```
->>> import minidb
+>>> import minidb2
 ```
 
 To create a store in memory, we simply instantiate a minidb.Store, optionally
 telling it to output SQL statements as debug output:
 
 ```
->>> db = minidb.Store(debug=True)
+>>> db = minidb2.Store(debug=True)
 ```
 
 If you want to persist into a file, simply pass in a filename as the first
 parameter when creating the minidb.Store:
 
 ```
->>> db = minidb.Store('filename.db', debug=True)
+>>> db = minidb2.Store('filename.db', debug=True)
 ```
 
 Note that for persisting data into the file, you actually need to call
 db.close() to flush the changes to disk, and optionally db.commit() if you
 want to save the changes to disk without closing the database.
 
-By default, `minidb` executes `VACUUM` on the SQLite database on close. You
+By default, `minidb2` executes `VACUUM` on the SQLite database on close. You
 can opt-out of this behaviour by passing `vacuum_on_close=False` to the
 `minidb.Store` constructor. You can manually execute a `VACUUM` by calling
 `.vacuum()` on the `minidb.Store` object, this helps reduce the file size
@@ -45,10 +47,10 @@ care of all the behind-the-scenes magic for making your class persistable, and
 adds methods for working with the database):
 
 ```
->>> class Person(minidb.Model):
-...     name = str
-...     email = str
-...     age = int
+>>> class Person(minidb2.Model):
+...     name:str
+...     email:str
+...     age:int
 ```
 
 Every subclass of minidb.Model will also have a "id" attribute that is None if
