@@ -764,7 +764,8 @@ class MetaModel(type):
                         or isinstance(v, classmethod)))
         if '__annotations__' in mixins:
             annots = mixins['__annotations__']
-            persistent_slots = OrderedDict((k, v) for k, v in annots.items())
+            persistent_slots = OrderedDict((k, t) for k, t in annots.items()
+                                           if isinstance(t, type))
             slot_defaults = dict((k, slots[k])
                                  for k in persistent_slots
                                  if k in slots)
